@@ -9,6 +9,7 @@ export const bookingsTable = pgTable("bookings", {
   phone: text("phone").notNull(),
   message: text("message").notNull(),
   propertyId: integer("property_id").notNull().references(() => propertiesTable.id, { onDelete: "cascade" }),
+  userId: integer("user_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

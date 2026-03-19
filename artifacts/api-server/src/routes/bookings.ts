@@ -1,9 +1,24 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { db } from "@workspace/db";
 import { bookingsTable, propertiesTable } from "@workspace/db";
 import { eq, sql } from "drizzle-orm";
 import { CreateBookingBody, GetBookingsQueryParams, DeleteBookingParams } from "@workspace/api-zod";
-import { authenticate, requireAdmin } from "../middlewares/auth.js";
+import { authenticate, requireAdmin, type AuthRequest } from "../middlewares/auth.js";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "azzam_jwt_secret_2024";
+
+function optionalAuth(req: AuthRequest, _res: Response, next: NextFunction) {
+  try {
+    const authHeader = req.headers.authorization;
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.substring(7);
+      const decoded = jwt.verify(token, JWT_SECRET) as AuthRequest["user"];
+      req.user = decoded;
+    }
+  } catch { /* ignore */ }
+  next();
+}
 
 const router: IRouter = Router();
 
@@ -78,7 +93,7 @@ router.get("/", authenticate, requireAdmin, async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", optionalAuth, async (req: AuthRequest, res) => {
   try {
     const parsed = CreateBookingBody.safeParse(req.body);
     if (!parsed.success) {
@@ -92,7 +107,8 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    const [booking] = await db.insert(bookingsTable).values(parsed.data).returning();
+    const userId = req.user?.id ?? null;
+    const [booking] = await db.insert(bookingsTable).values({ ...parsed.data, userId }).returning();
     res.status(201).json({ ...booking, property });
   } catch (err) {
     res.status(500).json({ error: "Internal server error", message: "Failed to create booking" });
