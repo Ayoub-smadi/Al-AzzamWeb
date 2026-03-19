@@ -36,8 +36,8 @@ export default function Home() {
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=90"
-            alt="Luxury Villa" 
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=90"
+            alt="Land Property" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628]/90 via-[#0a1628]/70 to-transparent" />
