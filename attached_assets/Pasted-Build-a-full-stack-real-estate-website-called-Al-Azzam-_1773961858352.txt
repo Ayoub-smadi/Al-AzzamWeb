@@ -1,0 +1,186 @@
+Build a full-stack real estate website called **"Al-Azzam Real Estate (العزام للعقارات)"** using:
+
+* Frontend: React + Tailwind CSS (modern UI, responsive, dark/light mode)
+* Backend: Node.js + Express
+* Database: MongoDB (or PostgreSQL if easier)
+* Authentication: JWT-based login system
+
+---
+
+## 🌐 General Requirements
+
+Create a modern, clean, and professional real estate platform with:
+
+* Beautiful homepage with hero section and featured properties
+* High-quality property cards with images
+* Fully responsive design (mobile + desktop)
+* Dark mode + Light mode toggle
+* Arabic + English support
+
+---
+
+## 👤 Authentication System
+
+Create login system with roles:
+
+### Admin Accounts (2 users):
+
+* Email: [admin1@azzam.com](mailto:admin1@azzam.com) | Password: 123456
+* Email: [admin2@azzam.com](mailto:admin2@azzam.com) | Password: 123456
+
+### Test User:
+
+* Email: [user@azzam.com](mailto:user@azzam.com) | Password: 123456
+
+* Use JWT authentication
+
+* Only admins can access dashboard
+
+* Protect routes securely
+
+---
+
+## 🏠 Property Features
+
+Each property should include:
+
+* Title (name of property)
+* Description
+* Price
+* Location (city, area)
+* Property type (Land, Chalet, Apartment, Villa)
+* Status (Available / Sold / Reserved)
+* مساحة (area in m²)
+* Multiple images upload (important)
+* Created date
+
+---
+
+## 📸 Image Upload
+
+* Allow uploading multiple images per property
+* Show images in slider/gallery
+* Use cloud storage or local storage
+
+---
+
+## 🧑‍💼 Admin Dashboard
+
+Create full dashboard with:
+
+### Features:
+
+* Add new property
+* Edit property
+* Delete property
+* View all properties
+* Change property status (Available / Reserved / Sold)
+
+### Booking Management:
+
+* View all booking requests
+
+* Each booking includes:
+
+  * User name
+  * Phone number
+  * Message
+  * Property ID
+  * Date
+
+* When a user clicks "Book Property" or "Contact", it should:
+  👉 Save booking in database
+  👉 Show notification in dashboard
+
+---
+
+## 📞 Contact / Booking System
+
+* Button on each property:
+
+  * "احجز الآن" (Book Now)
+  * "تواصل معنا" (Contact)
+
+* When clicked:
+
+  * Show form:
+
+    * Name
+    * Phone
+    * Message
+
+* On submit:
+
+  * Save to database
+  * Show success message
+
+---
+
+## 🔎 Filters & Search
+
+Add:
+
+* Search by name/location
+* Filter by:
+
+  * Price range
+  * Property type
+  * Status
+
+---
+
+## 🎨 UI/UX Requirements
+
+* Use cards with shadows and hover effects
+* Smooth animations
+* Image sliders for properties
+* Clean navbar:
+
+  * Home
+  * Properties
+  * About
+  * Login
+
+---
+
+## 📊 Extra Features
+
+* Statistics in dashboard:
+
+  * Total properties
+  * Reserved properties
+  * Sold properties
+  * Total bookings
+
+* Notifications system (simple alert or badge)
+
+---
+
+## ⚙️ Technical Requirements
+
+* Clean code structure (MVC or similar)
+* Error handling everywhere (NO crashes)
+* Validate all inputs (forms, login, etc.)
+* API endpoints tested and working
+* Fully working frontend + backend integration
+
+---
+
+## 🚀 Important
+
+* The project must run without errors
+* Provide full instructions to run (npm install, etc.)
+* Use environment variables for secrets
+* Seed database with sample properties and users
+
+---
+
+## 🎯 Goal
+
+Build a COMPLETE real estate platform where:
+
+* Admin controls everything from dashboard
+* Users can browse, view details, and book properties
+* Bookings appear instantly in admin dashboard
+
+Make it modern, fast, and production-ready.

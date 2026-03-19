@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Al-Azzam Real Estate"
+version = "1.0.0"
+id = "artifacts/al-azzam"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24014
+
+[services.development]
+run = "pnpm --filter @workspace/al-azzam run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/al-azzam", "run", "build" ]
+publicDir = "artifacts/al-azzam/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24014"
+BASE_PATH = "/"
