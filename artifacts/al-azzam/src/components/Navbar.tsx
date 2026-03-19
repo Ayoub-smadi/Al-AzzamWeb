@@ -37,46 +37,46 @@ export function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-xl shadow-lg group-hover:scale-105 transition-transform font-arabic">
+            <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg group-hover:scale-105 transition-transform font-arabic">
               ع
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-xl leading-tight font-arabic tracking-tight text-white">العزام للعقارات</span>
-              <span className="text-[10px] text-white/70 font-display font-semibold uppercase tracking-wider">Al-Azzam Real Estate</span>
+              <span className="font-bold text-xl leading-tight font-arabic tracking-tight">العزام للعقارات</span>
+              <span className="text-[10px] text-muted-foreground font-display font-semibold uppercase tracking-wider">Al-Azzam Real Estate</span>
             </div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {links.map(link => (
-              <Link key={link.href} href={link.href} className="text-sm font-medium text-white hover:text-primary transition-colors">
+              <Link key={link.href} href={link.href} className="text-sm font-medium hover:text-primary transition-colors">
                 {link.label}
               </Link>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full text-white hover:bg-white/10">
-              {theme === "dark" ? <Sun className="h-5 w-5 text-white" /> : <Moon className="h-5 w-5 text-white" />}
+            <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full">
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-            <Button variant="ghost" size="icon" onClick={toggleLang} className="rounded-full text-white hover:bg-white/10" title="Toggle Language">
-              <Globe className="h-5 w-5 text-white" />
+            <Button variant="ghost" size="icon" onClick={toggleLang} className="rounded-full" title="Toggle Language">
+              <Globe className="h-5 w-5" />
               <span className="sr-only">Toggle Language</span>
             </Button>
             
             {user ? (
-              <Button variant="outline" onClick={logout} className="rounded-full border-white/30 text-white hover:bg-white/10">
+              <Button variant="outline" onClick={logout} className="rounded-full border-primary/20 hover:bg-primary/10">
                 <UserIcon className="h-4 w-4 mr-2" />
                 {t("تسجيل خروج", "Logout")}
               </Button>
             ) : (
-              <Link href="/login" className="px-4 py-2 text-sm font-medium rounded-full bg-primary text-white hover:bg-primary/90 transition-colors shadow-md">
+              <Link href="/login" className="px-4 py-2 text-sm font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-md">
                 {t("تسجيل الدخول", "Login")}
               </Link>
             )}
           </div>
 
-          <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-white/10" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
       </div>
