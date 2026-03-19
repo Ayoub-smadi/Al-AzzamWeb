@@ -36,11 +36,11 @@ export default function Home() {
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
+            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=90"
             alt="Luxury Villa" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/70 to-secondary/30 dark:from-background dark:via-background/80 dark:to-background/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628]/90 via-[#0a1628]/70 to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10 text-white">

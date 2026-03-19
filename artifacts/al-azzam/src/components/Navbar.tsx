@@ -37,12 +37,12 @@ export function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg group-hover:scale-105 transition-transform font-arabic">
               ع
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg leading-none font-arabic">العزام للعقارات</span>
-              <span className="text-xs text-muted-foreground font-display font-medium">Al-Azzam Real Estate</span>
+              <span className="font-bold text-xl leading-tight font-arabic tracking-tight">العزام للعقارات</span>
+              <span className="text-[10px] text-muted-foreground font-display font-semibold uppercase tracking-wider">Al-Azzam Real Estate</span>
             </div>
           </Link>
 
