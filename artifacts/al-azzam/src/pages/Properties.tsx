@@ -46,7 +46,7 @@ export default function Properties() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4 font-display text-white">
             {t("اكتشف عقاراتنا", "Explore Our Properties")}
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             {t("ابحث في مجموعتنا الواسعة من العقارات واعثر على المكان المثالي لك", "Search through our wide collection of properties and find the perfect place for you")}
           </p>
         </div>
