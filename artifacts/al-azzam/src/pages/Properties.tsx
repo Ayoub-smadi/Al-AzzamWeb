@@ -43,10 +43,10 @@ export default function Properties() {
            <img src={`${import.meta.env.BASE_URL}images/pattern-bg.png`} className="w-full h-full object-cover" alt="" />
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-display text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-display text-black">
             {t("اكتشف عقاراتنا", "Explore Our Properties")}
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto">
+          <p className="text-lg text-black max-w-2xl mx-auto">
             {t("ابحث في مجموعتنا الواسعة من العقارات واعثر على المكان المثالي لك", "Search through our wide collection of properties and find the perfect place for you")}
           </p>
         </div>
