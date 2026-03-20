@@ -2,43 +2,56 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useLogin } from "@workspace/api-client-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLocation, Link } from "wouter";
 
-const loginSchema = z.object({
+const registerSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string(),
+}).refine(data => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export default function Login() {
-  const { t, lang } = useLanguage();
+export default function Register() {
+  const { t } = useLanguage();
   const { login: setAuth } = useAuth();
   const [, setLocation] = useLocation();
   const [errorMsg, setErrorMsg] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
-  const { mutate: doLogin, isPending } = useLogin();
-
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema)
+  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema)
   });
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = async (data: RegisterFormValues) => {
     setErrorMsg("");
-    doLogin({ data }, {
-      onSuccess: (res) => {
-        setAuth(res.token, res.user);
-        setLocation(res.user.role === 'admin' ? '/dashboard' : '/');
-      },
-      onError: (err: any) => {
-        setErrorMsg(err?.message || t("حدث خطأ أثناء تسجيل الدخول", "Login failed"));
+    setIsPending(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: data.name, email: data.email, password: data.password }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setErrorMsg(json.message || t("حدث خطأ أثناء إنشاء الحساب", "Registration failed"));
+        return;
       }
-    });
+      setAuth(json.token, json.user);
+      setLocation("/");
+    } catch {
+      setErrorMsg(t("حدث خطأ في الاتصال بالخادم", "Server connection error"));
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -50,16 +63,22 @@ export default function Login() {
           <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
             ع
           </div>
-          <h1 className="text-2xl font-bold font-display">{t("تسجيل الدخول", "Welcome Back")}</h1>
-          <p className="text-muted-foreground mt-2">{t("أدخل بياناتك للمتابعة", "Enter your credentials to continue")}</p>
+          <h1 className="text-2xl font-bold font-display">{t("إنشاء حساب جديد", "Create New Account")}</h1>
+          <p className="text-muted-foreground mt-2">{t("أدخل بياناتك لإنشاء حسابك", "Enter your details to create your account")}</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {errorMsg && (
             <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm border border-red-100">
               {errorMsg}
             </div>
           )}
+
+          <div>
+            <label className="block text-sm font-medium mb-1.5">{t("الاسم الكامل", "Full Name")}</label>
+            <Input {...register("name")} type="text" placeholder={t("اسمك الكامل", "Your full name")} />
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+          </div>
           
           <div>
             <label className="block text-sm font-medium mb-1.5">{t("البريد الإلكتروني", "Email Address")}</label>
@@ -73,8 +92,14 @@ export default function Login() {
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
           </div>
 
+          <div>
+            <label className="block text-sm font-medium mb-1.5">{t("تأكيد كلمة المرور", "Confirm Password")}</label>
+            <Input {...register("confirmPassword")} type="password" placeholder="••••••••" dir="ltr" className="text-left" />
+            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
+          </div>
+
           <Button type="submit" className="w-full h-12 text-lg mt-2" disabled={isPending}>
-            {isPending ? t("جاري التحقق...", "Logging in...") : t("دخول", "Login")}
+            {isPending ? t("جاري الإنشاء...", "Creating account...") : t("إنشاء الحساب", "Create Account")}
           </Button>
         </form>
 
@@ -97,14 +122,14 @@ export default function Login() {
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          {t("المتابعة بحساب Google", "Continue with Google")}
+          {t("التسجيل بحساب Google", "Sign up with Google")}
         </a>
         
         <div className="mt-6 text-center text-sm">
-          <span className="text-muted-foreground">{t("ليس لديك حساب؟", "Don't have an account?")}</span>
+          <span className="text-muted-foreground">{t("لديك حساب بالفعل؟", "Already have an account?")}</span>
           {" "}
-          <Link href="/register" className="text-primary font-semibold hover:underline">
-            {t("إنشاء حساب جديد", "Create new account")}
+          <Link href="/login" className="text-primary font-semibold hover:underline">
+            {t("تسجيل الدخول", "Sign in")}
           </Link>
         </div>
       </div>

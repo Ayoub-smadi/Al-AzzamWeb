@@ -4,8 +4,22 @@ import { useGetMe, type User } from "@workspace/api-client-react";
 import { getAuthHeaders } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 
+function extractTokenFromUrl(): string | null {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+  if (token) {
+    params.delete("token");
+    const newSearch = params.toString();
+    const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "");
+    window.history.replaceState({}, "", newUrl);
+    return token;
+  }
+  return null;
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('azzam_token'));
+  const urlToken = extractTokenFromUrl();
+  const [token, setToken] = useState<string | null>(urlToken || localStorage.getItem('azzam_token'));
   const queryClient = useQueryClient();
 
   const { data: user, isLoading } = useGetMe({

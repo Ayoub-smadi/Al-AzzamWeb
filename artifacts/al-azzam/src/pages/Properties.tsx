@@ -13,6 +13,7 @@ export default function Properties() {
   const [filters, setFilters] = useState<GetPropertiesParams>({
     page: 1,
     limit: 12,
+    status: "available",
   });
   
   const [searchInput, setSearchInput] = useState("");
@@ -29,14 +30,9 @@ export default function Properties() {
     setFilters(prev => ({ ...prev, type: val ? (val as any) : undefined, page: 1 }));
   };
 
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value;
-    setFilters(prev => ({ ...prev, status: val ? (val as any) : undefined, page: 1 }));
-  };
-
   const clearFilters = () => {
     setSearchInput("");
-    setFilters({ page: 1, limit: 12 });
+    setFilters({ page: 1, limit: 12, status: "available" });
   };
 
   return (
@@ -59,7 +55,7 @@ export default function Properties() {
       <div className="container mx-auto px-4">
         {/* Filters */}
         <div className="bg-card border rounded-2xl p-6 shadow-sm mb-10">
-          <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+          <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             <div className="col-span-1 md:col-span-2">
               <label className="block text-sm font-medium mb-2 text-muted-foreground">{t("بحث", "Search")}</label>
               <div className="relative">
@@ -85,20 +81,6 @@ export default function Properties() {
                 <option value="chalet">{t("شاليه", "Chalet")}</option>
                 <option value="apartment">{t("شقة", "Apartment")}</option>
                 <option value="villa">{t("فيلا", "Villa")}</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2 text-muted-foreground">{t("الحالة", "Status")}</label>
-              <select 
-                className="flex h-12 w-full rounded-xl border border-border bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                value={filters.status || ""}
-                onChange={handleStatusChange}
-              >
-                <option value="">{t("الكل", "All")}</option>
-                <option value="available">{t("متاح", "Available")}</option>
-                <option value="reserved">{t("محجوز", "Reserved")}</option>
-                <option value="sold">{t("مباع", "Sold")}</option>
               </select>
             </div>
           </form>
