@@ -182,7 +182,7 @@ function PropertiesTab() {
 
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
-    defaultValues: { images: [{ url: "" }] }
+    defaultValues: { type: "villa", status: "available", images: [{ url: "" }] }
   });
 
   const { fields, append, remove } = useFieldArray({ control: form.control, name: "images" });
@@ -195,7 +195,7 @@ function PropertiesTab() {
 
   const handleAdd = () => {
     setEditingProp(null);
-    form.reset({ title: "", titleAr: "", description: "", descriptionAr: "", location: "", locationAr: "", city: "", cityAr: "", price: 0, area: 0, type: "apartment", status: "available", images: [{ url: "" }] });
+    form.reset({ title: "", titleAr: "", description: "", descriptionAr: "", location: "", locationAr: "", city: "", cityAr: "", price: 0, area: 0, type: "villa", status: "available", images: [{ url: "" }] });
     setModalOpen(true);
   };
 
@@ -273,10 +273,10 @@ function PropertiesTab() {
               <div>
                 <label className="text-xs mb-1 block">النوع</label>
                 <select {...form.register("type")} className="w-full border rounded-xl p-2 h-12 text-sm bg-background">
-                  <option value="land">أرض (Land)</option>
-                  <option value="chalet">شاليه (Chalet)</option>
-                  <option value="apartment">شقة (Apartment)</option>
                   <option value="villa">فيلا (Villa)</option>
+                  <option value="apartment">شقة (Apartment)</option>
+                  <option value="chalet">شاليه (Chalet)</option>
+                  <option value="land">أرض (Land)</option>
                 </select>
               </div>
               <div>
