@@ -603,8 +603,17 @@ function BookingsTab() {
                 <td className="px-5 py-3 text-primary font-medium">
                   {b.property ? (lang === 'ar' ? b.property.titleAr : b.property.title) : `#${b.propertyId}`}
                 </td>
-                <td className="px-5 py-3 max-w-[200px]">
-                  <p className="truncate text-muted-foreground">{b.message || '—'}</p>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    {b.property?.images?.[0] ? (
+                      <img src={b.property.images[0]} alt="" className="w-14 h-10 object-cover rounded-lg border shrink-0" />
+                    ) : (
+                      <div className="w-14 h-10 bg-muted rounded-lg flex items-center justify-center shrink-0">
+                        <ImageIcon className="w-4 h-4 text-muted-foreground" />
+                      </div>
+                    )}
+                    <p className="truncate text-muted-foreground max-w-[160px] text-sm">{b.message || '—'}</p>
+                  </div>
                 </td>
                 <td className="px-5 py-3 text-center">
                   <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-red-50" onClick={() => { if (confirm('حذف هذا الطلب؟')) deleteBooking({ id: b.id }); }}>
