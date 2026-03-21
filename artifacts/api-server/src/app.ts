@@ -4,9 +4,6 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import path from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app: Express = express();
 
@@ -33,7 +30,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/api/uploads", express.static(path.resolve(process.cwd(), "artifacts/api-server/uploads")));
 app.use("/api", router);
 
 export default app;

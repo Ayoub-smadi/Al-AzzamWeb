@@ -1,12 +1,10 @@
 import { Router, type IRouter } from "express";
 import multer from "multer";
 import path from "path";
-import { fileURLToPath } from "url";
 import fs from "fs";
 import { authenticate, requireAdmin } from "../middlewares/auth.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const uploadsDir = path.join(__dirname, "../../uploads");
+const uploadsDir = path.resolve(process.cwd(), "artifacts/api-server/uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({
